@@ -17,7 +17,7 @@ prepare() {
   ln -rTsf $pkgname-$pkgver $gopath
   export GOPATH="$srcdir"/gopath
   cd $gopath
-  go get
+  go get -v -d
 }
 
 build() {
