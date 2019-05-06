@@ -5,21 +5,31 @@ pkgdesc='A unix filter which outputs the filepaths found in stdin'
 arch=('x86_64')
 url="https://github.com/edi9999/$pkgname"
 license=('GPL')
-makedepends=('go-pie')
+makedepends=('go')
 source=("$url/archive/v$pkgver.tar.gz")
 sha256sums=('7d6c7463e833305e6d27c63727fec1029651bfe8bca5e8d23ac7db920c2066e7')
 
+gopath=gopath/src/github.com/edi9999/$pkgname
+
+prepare() {
+  mkdir -p $(dirname $gopath)
+  ln -rTsf $pkgname-$pkgver $gopath
+  export GOPATH="$srcdir"/gopath
+  # cd $gopath
+  # go get -d
+}
+
 build() {
-  cd $pkgname-$pkgver
-  go build \
+  export GOPATH="$srcdir"/gopath
+  cd $gopath
+  go install \
     -gcflags "all=-trimpath=$PWD" \
     -asmflags "all=-trimpath=$PWD" \
     -ldflags "-extldflags $LDFLAGS" \
-    -v -o pe $pkgname/pe.go
+    -v ./...
 }
 
 package() {
-  cd $pkgname-$pkgver
-  install -Dm755 pe "$pkgdir"/usr/bin/$pkgname
+  install -Dm755 gopath/bin/$pkgname "$pkgdir"/usr/bin/$pkgname
 }
 

@@ -6,21 +6,31 @@ arch=('x86_64')
 url="https://github.com/bellecp/$pkgname"
 license=('GPL')
 depends=('fzf')
-makedepends=('go-pie')
+makedepends=('go')
 source=("$url/archive/v$pkgver.tar.gz")
 sha256sums=('87e34e6b4bee5e20247e997b19c0d8c08dd6f35a6c0dd4b507224d6790e2b071')
 
+gopath=gopath/src/github.com/bellecp/$pkgname
+
+prepare() {
+  mkdir -p $(dirname $gopath)
+  ln -rTsf $pkgname-$pkgver $gopath
+  export GOPATH="$srcdir"/gopath
+  cd $gopath
+  go get -v -d
+}
+
 build() {
-  cd $pkgname-$pkgver
-  go build \
+  export GOPATH="$srcdir"/gopath
+  cd $gopath
+  go install \
     -gcflags "all=-trimpath=$PWD" \
     -asmflags "all=-trimpath=$PWD" \
     -ldflags "-extldflags $LDFLAGS" \
-    -v -o $pkgname .
+    -v ./...
 }
 
 package() {
-  cd $pkgname-$pkgver
-  install -Dm755 $pkgname "$pkgdir"/usr/bin/$pkgname
+  install -Dm755 gopath/bin/$pkgname "$pkgdir"/usr/bin/$pkgname
 }
 
