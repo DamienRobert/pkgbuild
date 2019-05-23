@@ -1,3 +1,2 @@
-git checkout public
-git merge --squash master
+git my trivial -- -b public --merge --tree master
 aurpublish ...
