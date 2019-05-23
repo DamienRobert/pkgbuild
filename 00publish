@@ -1,0 +1,3 @@
+git checkout public
+git merge --squash master
+aurpublish ...
