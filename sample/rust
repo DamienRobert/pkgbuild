@@ -1,0 +1,32 @@
+# vim: ft=PKGBUILD
+
+# Maintainer: Sven-Hendrik Haase <svenstaro@gmail.com>
+pkgname=genact
+pkgver=0.7.0
+pkgrel=1
+pkgdesc="A nonsense activity generator"
+url="https://github.com/svenstaro/$pkgname"
+arch=("x86_64")
+license=("MIT")
+makedepends=("rust")
+source=("$url/archive/$pkgver.tar.gz")
+sha512sums=('1337deadbeef')
+
+build() {
+  cd "$pkgname-$pkgver"
+  cargo build --release --locked
+}
+
+check() {
+  cd "$pkgname-$pkgver"
+  cargo test --release --locked
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  # Just the bin and license
+  install -Dm 755 target/release/${pkgname} -t "${pkgdir}/usr/bin"
+  install -Dm 644 "LICENSE" -t "$pkgdir/usr/share/licenses/$pkgname"
+  # When there are more files
+  cargo install --root "${pkgdir}"/usr --root "${srcdir}/${pkgname}-${pkgver}"
+}
