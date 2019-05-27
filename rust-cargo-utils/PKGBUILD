@@ -1,4 +1,4 @@
-# PKGDEST=/tmp makepkg -R
+# PKGDEST=/tmp makepkg -R --sign
 pkgname=rust-cargo-utils
 pkgver=20190527
 pkgrel=1
