@@ -1,0 +1,17 @@
+# PKGDEST=/tmp makepkg -R
+pkgname=rust-cargo-utils
+pkgver=20190527
+pkgrel=1
+pkgdesc='Cargo helpers'
+arch=('x86_64')
+license=('MIT')
+depends=()
+makedepends=()
+source=()
+sha256sums=()
+
+_cli=(cargo-cache cargo-tree cargo-install-update cargo-install-update-config)
+
+package() {
+  install -Dm755 -t "$pkgdir"/usr/bin/ "${_cli[@]/#/${CARGO_HOME}/bin/}"
+}

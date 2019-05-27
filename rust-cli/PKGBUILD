@@ -1,0 +1,21 @@
+# PKGDEST=/tmp makepkg -R
+pkgname=rust-cli
+pkgver=20190527
+pkgrel=1
+pkgdesc='List of nice cli written in rust and compiled via cargo (nightly)'
+arch=('x86_64')
+license=('MIT')
+depends=()
+makedepends=()
+source=()
+sha256sums=()
+
+# Note: hunter is bundled with preview-gen and bugs out
+#       git-global bugs out too
+
+_cli=(bingrep broot cw diskus dupe-krill fastmod genact gig git-find git-global hunter hyperfine jql lolcate mprober preview-gen procs rip runiq ruplacer sd slink sn strace-analyzer tree-rs ttdl xcompress xcp)
+
+package() {
+  install -Dm755 -t "$pkgdir"/usr/bin/ "${_cli[@]/#/${CARGO_HOME}/bin/}"
+}
+
