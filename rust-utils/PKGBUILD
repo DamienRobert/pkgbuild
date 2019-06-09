@@ -14,13 +14,15 @@ sha256sums=()
 
 package_rust-cli-utils() {
   pkgdesc='List of nice cli written in rust and compiled via cargo (nightly)'
-  _cli=($( ruby -e "require 'dr/packages/user'
-  puts ShellHelpers.export_value(DR::Packages::User::CARGO_TOOLS_BIN[:cli])"))
-  install -Dm755 -t "$pkgdir"/usr/bin/ "${_cli[@]/#/${CARGO_HOME}/bin/}"
+  _bin=($( ruby -e "require 'dr/packages/user'
+  puts DR::Packages::User::CARGO_TOOLS_BIN[:cli].join(' ')"))
+  install -Dm755 -t "$pkgdir"/usr/bin/ "${_bin[@]/#/${CARGO_HOME}/bin/}"
 }
 
 package_rust-cargo-utils() {
   pkgdesc='Cargo helpers'
-  install -Dm755 -t "$pkgdir"/usr/bin/ "${_clibin[@]/#/${CARGO_HOME}/bin/}"
+  _bin=($( ruby -e "require 'dr/packages/user'
+  puts DR::Packages::User::CARGO_TOOLS_BIN[:cargo].join(' ')"))
+  install -Dm755 -t "$pkgdir"/usr/bin/ "${_bin[@]/#/${CARGO_HOME}/bin/}"
 }
 
