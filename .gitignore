@@ -1,2 +1,4 @@
 *.sig
 *.xz
+src/
+pkg/
