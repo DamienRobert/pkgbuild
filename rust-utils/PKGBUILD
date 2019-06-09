@@ -1,4 +1,12 @@
-# PKGDEST=/tmp makepkg -R --sign
+# => install nightly rust
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --default-toolchain nightly
+# => cargo
+# pkg=($( ruby -e "require 'dr/packages/user'; puts DR::Packages::User::CARGO_TOOLS.values.flatten.join(' ')"))
+# cargo +nightly install $pkg
+# cargo +nightly install-update -a
+# => makepkg
+# PKGDEST=/tmp makepkg -c -R --sign
+# aur.rb --imb db add /tmp/rust-*utils*.xz
 pkgbase=rust-utils
 pkgname=(rust-cli-utils rust-cargo-utils)
 pkgver=$(date '+%Y%m%d')
@@ -9,8 +17,6 @@ depends=()
 makedepends=()
 source=()
 sha256sums=()
-
-# => cargo +nightly install $_pkg
 
 package_rust-cli-utils() {
   pkgdesc='List of nice cli written in rust and compiled via cargo (nightly)'
