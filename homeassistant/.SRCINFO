@@ -1,0 +1,16 @@
+pkgbase = home-assistant
+	pkgdesc = Open-source home automation platform running on Python 3
+	pkgver = 0.94.1
+	pkgrel = 1
+	url = https://home-assistant.io/
+	arch = any
+	license = APACHE
+	makedepends = python-setuptools
+	depends = python
+	optdepends = git: install component requirements from github
+	optdepends = net-tools: necessary for nmap discovery
+	source = home-assistant-0.94.1.tar.gz::https://github.com/home-assistant/home-assistant/archive/0.94.1.tar.gz
+	sha256sums = SKIP
+
+pkgname = home-assistant
+

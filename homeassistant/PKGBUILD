@@ -1,0 +1,25 @@
+pkgname=home-assistant
+pkgdesc='Open-source home automation platform running on Python 3'
+pkgver=0.94.1
+pkgrel=1
+url="https://home-assistant.io/"
+license=('APACHE')
+arch=('any')
+makedepends=('python-setuptools')
+# NB: this package will install additional python packages in /var/lib/hass/lib depending on components present in the configuration files.
+depends=('python'
+         )
+optdepends=('git: install component requirements from github'
+            'net-tools: necessary for nmap discovery')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/${pkgname}/${pkgname}/archive/${pkgver}.tar.gz")
+sha256sums=(SKIP)
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  python setup.py build
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  python setup.py install --root="$pkgdir" --prefix=/opt/homeassistant --optimize=1 --skip-build
+}
