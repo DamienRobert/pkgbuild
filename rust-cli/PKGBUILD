@@ -1,8 +1,8 @@
 # PKGDEST=/tmp makepkg -R --sign
-pkgname=rust-cli
-pkgver=20190604
+pkgbase=rust-utils
+pkgname=(rust-cli-utils rust-cargo-utils)
+pkgver=$(date '+%Y%m%d')
 pkgrel=1
-pkgdesc='List of nice cli written in rust and compiled via cargo (nightly)'
 arch=('x86_64')
 license=('MIT')
 depends=()
@@ -11,14 +11,16 @@ source=()
 sha256sums=()
 
 # => cargo +nightly install $_pkg
-# Note: hunter is bundled with preview-gen and bugs out
-#       git-global bugs out too
 
-_cli=(bingrep broot cw diskus dupe-krill fastmod genact gig git-find git-global hunter preview-gen hyperfine jql lolcate mprober procs rip runiq ruplacer sd slink sn strace-analyzer tree-rs ttdl xcompress xcp xsv)
-_pkg=($_cli tabwriter-bin fst-bin)
-_clibin=($_cli tabwriter fst)
+package_rust-cli-utils() {
+  pkgdesc='List of nice cli written in rust and compiled via cargo (nightly)'
+  _cli=($( ruby -e "require 'dr/packages/user'
+  puts ShellHelpers.export_value(DR::Packages::User::CARGO_TOOLS_BIN[:cli])"))
+  install -Dm755 -t "$pkgdir"/usr/bin/ "${_cli[@]/#/${CARGO_HOME}/bin/}"
+}
 
-package() {
+package_rust-cargo-utils() {
+  pkgdesc='Cargo helpers'
   install -Dm755 -t "$pkgdir"/usr/bin/ "${_clibin[@]/#/${CARGO_HOME}/bin/}"
 }
 
