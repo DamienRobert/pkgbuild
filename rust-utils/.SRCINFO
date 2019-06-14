@@ -1,0 +1,12 @@
+pkgbase = rust-utils
+	pkgver = 20190614
+	pkgrel = 1
+	arch = x86_64
+	license = MIT
+
+pkgname = rust-cli-utils
+	pkgdesc = List of nice cli written in rust and compiled via cargo (nightly)
+
+pkgname = rust-cargo-utils
+	pkgdesc = Cargo helpers
+
