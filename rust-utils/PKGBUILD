@@ -1,5 +1,7 @@
 # => install nightly rust
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --default-toolchain nightly
+# => or update
+# rustup update
 
 # => cargo
 # pkg=($( ruby -e "require 'dr/packages/user'; puts DR::Packages::User::CARGO_TOOLS.values.flatten.join(' ')"))
