@@ -1,5 +1,5 @@
 pkgbase = rust-utils
-	pkgver = 20190614
+	pkgver = 20190904
 	pkgrel = 1
 	arch = x86_64
 	license = MIT
