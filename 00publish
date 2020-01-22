@@ -1,2 +1,9 @@
+# checkout to public, and add master's current tree
 git my trivial -- -B public --use master public
-git checkout public && aurpublish ...
+git checkout public && aurpublish pkgs
+
+# see currently release pkgbuilds:
+g my topic infos -r
+
+# new release: update package build
+makepkg -g
