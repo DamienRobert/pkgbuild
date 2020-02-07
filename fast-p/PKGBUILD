@@ -1,6 +1,6 @@
 pkgname=fast-p
 pkgver=0.2.5
-pkgrel=1
+pkgrel=2
 pkgdesc='Quickly find and open a pdf among a collection of thousands of unsorted pdfs through fzf (fuzzy finder)'
 arch=('x86_64')
 repo="github.com/bellecp/$pkgname"
@@ -26,6 +26,7 @@ build() {
   cd $gopkg
   go install \
     -trimpath \
+    -ldflags "-extldflags $LDFLAGS" \
     -v ./...
 }
 
@@ -39,4 +40,3 @@ check() {
 package() {
   install -Dm755 gopath/bin/$pkgname "$pkgdir"/usr/bin/$pkgname
 }
-

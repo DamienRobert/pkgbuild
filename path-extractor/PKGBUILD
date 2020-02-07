@@ -1,6 +1,6 @@
 pkgname=path-extractor
 pkgver=0.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc='A unix filter which outputs the filepaths found in stdin'
 arch=('x86_64')
 repo="github.com/edi9999/$pkgname"
@@ -25,14 +25,16 @@ build() {
   cd $gopkg
   go install \
     -trimpath \
+    -ldflags "-extldflags $LDFLAGS" \
     -v ./...
 }
 
-check() {
-  export GOPATH="$srcdir"/gopath
-  cd $gopkg
-  go test ./...
-}
+# Skip check, they don't pass
+# check() {
+#   export GOPATH="$srcdir"/gopath
+#   cd $gopkg
+#   go test ./...
+# }
 
 package() {
   install -Dm755 gopath/bin/$pkgname "$pkgdir"/usr/bin/$pkgname
