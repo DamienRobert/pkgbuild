@@ -2,7 +2,7 @@
 git my trivial -- -B public --use master public
 git checkout public && aurpublish pkgs
 
-# see currently release pkgbuilds:
+# see currently released pkgbuilds:
 g my topic infos -r
 
 # new release: update package build
