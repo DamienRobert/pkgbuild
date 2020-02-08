@@ -7,3 +7,6 @@ g my topic infos -r
 
 # new release: update package build
 makepkg -g
+
+# remove build and src files:
+git clean -nx

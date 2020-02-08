@@ -20,11 +20,11 @@ build() {
 
 check() {
   cd $pkgname-$pkgver
-  go test -mod=vendor ./...
+  go test ./...
 }
 
 package() {
   cd $pkgname-$pkgver
-  install -Dm755 gopath/bin/$pkgname "$pkgdir"/usr/bin/$pkgname
-  install -Dm644 "$srcdir/src/$gopkg/LICENSE" "$pkgdir/usr/share/licenses/LICENSE"
+  install -Dm755 $pkgname "$pkgdir"/usr/bin/$pkgname
+  install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/LICENSE
 }

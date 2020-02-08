@@ -30,13 +30,15 @@ build() {
     -v ./...
 }
 
-check() {
-  export GOPATH="$srcdir"/gopath
-  cd $gopkg
-  go test ./...
-}
-
+# ?   	github.com/bellecp/fast-p	[no test files]
+# check() {
+#   export GOPATH="$srcdir"/gopath
+#   cd $gopkg
+#   go test ./...
+# }
 
 package() {
   install -Dm755 gopath/bin/$pkgname "$pkgdir"/usr/bin/$pkgname
+  cd $pkgname-$pkgver
+  install -Dm644 LICENSE "$pkgdir"/usr/share/licenses/LICENSE
 }
