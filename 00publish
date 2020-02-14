@@ -11,4 +11,4 @@ g my topic infos -r
 makepkg -g
 
 # remove build and src files:
-git clean -nx
+git clean -dnx
