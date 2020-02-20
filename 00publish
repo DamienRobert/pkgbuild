@@ -6,9 +6,13 @@ aurpublish pkg2
 
 # see currently released pkgbuilds:
 g my topic infos -r
+# list current published versions
+for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show $i | egrep "pkg(ver|rel)="; done
 
-# new release: update package build
+# new release: update package build with integrity hash
 makepkg -g
+# test:
+makepkg -crs --needed
 
 # remove build and src files:
 git clean -dnx
