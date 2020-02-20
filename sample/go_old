@@ -16,31 +16,40 @@ sha256sums=('87e34e6b4bee5e20247e997b19c0d8c08dd6f35a6c0dd4b507224d6790e2b071')
 gopkg="gopath/src/${_repo}"
 
 prepare() {
-  mkdir -p ${gopkg%/*}
-  ln -rsf "$pkgname-$pkgver" ${gopkg}
-  cd ${gopkg}
-  export GOPATH="${srcdir}/gopath"
+  #mkdir -p "$gopkg"
+  #ln -rTsf "$pkgname-$pkgver" "$gopkg"
+  # Note: the -T is there to treat $gopkg as a normal file rather than the
+  # directory. Thus without -f there should be an error (rather than
+  # putting the symlink in the directory), and with -f it should remove the
+  # directory. But I get 'cannont overwrite directory' (even if it is
+  # empty). So we fallback to this version:
+  mkdir -p "${gopkg%/*}"
+  ln -rTsf "$pkgname-$pkgver" "$gopkg" #-T is not really needed
+  cd "$gopkg"
+  export GOPATH="$srcdir/gopath"
   go get -v -d
 }
 
 check() {
-  cd ${gopkg}
-  export GOPATH="${srcdir}/gopath"
+  cd "$gopkg"
+  export GOPATH="$srcdir/gopath"
   go test ./...
 }
 
 build() {
-  cd ${gopkg}
-  export GOPATH="${srcdir}/gopath"
+  cd "$gopkg"
+  export GOPATH="$srcdir/gopath"
+  # Alternativement: utiliser les variables d'environnement suivantes:
+  # export CGO_LDFLAGS="${LDFLAGS}"
+  # export GOFLAGS="-trimpath"
   go install \
-    -gcflags "all=-trimpath=$PWD" \
-    -asmflags "all=-trimpath=$PWD" \
+    -trimpath \
     -ldflags "-extldflags $LDFLAGS" \
     -v ./...
 }
 
 package() {
-  install -Dm755 gopath/bin/$pkgname -t "${pkgdir}/usr/bin"
+  install -Dm755 "gopath/bin/$pkgname" -t "$pkgdir/usr/bin"
   cd "$pkgname-$pkgver"
   install -Dm644 "LICENSE" -t "$pkgdir/usr/share/licenses/$pkgname"
 }
