@@ -3,6 +3,10 @@ git my trivial -- -B public --use master public
 git checkout public
 aurpublish pkg1
 aurpublish pkg2
+git fetch --all
+
+# If this is a new package, add the remote:
+git remote add aur/pkg aur:pkg.git
 
 # see currently released pkgbuilds:
 g my topic infos -r
