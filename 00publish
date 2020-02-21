@@ -1,22 +1,37 @@
+#! /usr/bin/zsh
+
+mode=
+[[ -n $@ ]] && { mode=$1; shift }
+case $mode in
+  ''|'infos' )
+# see currently released pkgbuilds:
+git my topic infos -r
+;;
+  'v'|'version' )
+# list current published versions
+for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show $i | egrep "pkg(ver|rel)="; done
+;;
+  'pub'|'publish')
 # checkout to public, and add master's current tree
 git my trivial -- -B public --use master public
 git checkout public
-aurpublish pkg1
-aurpublish pkg2
+for pkg in $@; do
+  aurpublish $pkg
+  # If this is a new package, add the remote:
+  git remote add aur/pkg aur:pkg.git
+done
+git checkout master
 git fetch --all
-
-# If this is a new package, add the remote:
-git remote add aur/pkg aur:pkg.git
-
-# see currently released pkgbuilds:
-g my topic infos -r
-# list current published versions
-for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show $i | egrep "pkg(ver|rel)="; done
-
-# new release: update package build with integrity hash
-makepkg -g
-# test:
-makepkg -crs --needed
-
+;;
+  clean)
 # remove build and src files:
 git clean -dnx
+echo 'git clean -dfx'
+;;
+esac
+
+# # new release: update package build with integrity hash
+# makepkg -g
+# # test:
+# makepkg -crs --needed
+
