@@ -3,7 +3,9 @@
 mode=
 [[ -n $@ ]] && { mode=$1; shift }
 case $mode in
-  ''|'infos' )
+  'h'|'help')
+    echo '[i]nfos / [v]ersion / [pub]lish *pkgs / clean' ;;
+  ''|'i'|'infos' )
 # see currently released pkgbuilds:
 git my topic infos -r
 ;;
