@@ -4,36 +4,36 @@ mode=
 [[ -n $@ ]] && { mode=$1; shift }
 case $mode in
   'h'|'help')
-    echo '[i]nfos / [v]ersion / [pub]lish *pkgs / clean' ;;
+    echo '![i]nfos / [v]ersion / [pub]lish *pkgs / clean' ;;
   ''|'i'|'infos' )
-# see currently released pkgbuilds:
-git my topic infos -r
-;;
+    # see currently released pkgbuilds:
+    git my topic infos -r
+    ;;
   'v'|'version' )
-# list current published versions
-for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show $i | egrep "pkg(ver|rel)="; done
-;;
+    # list current published versions
+    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show $i | egrep "pkg(ver|rel)="; done
+    ;;
   'pub'|'publish')
-# checkout to public, and add master's current tree
-git my trivial -- -B public --use master public
-git checkout public
-for pkg in $@; do
-  aurpublish $pkg
-  # If this is a new package, add the remote:
-  git remote add aur/pkg aur:pkg.git
-done
-git checkout master
-git fetch --all
-;;
+    # checkout to public, and add master's current tree
+    git my trivial -- -B public --use master public
+    git checkout public
+    for pkg in $@; do
+      aurpublish $pkg
+      # If this is a new package, add the remote:
+      git remote add aur/pkg aur:pkg.git
+    done
+    git checkout master
+    git fetch --all
+    ;;
   clean)
-# remove build and src files:
-git clean -dnx
-echo 'git clean -dfx'
-;;
+    # remove build and src files:
+    git clean -dnx
+    echo 'git clean -dfx'
+    ;;
 esac
 
 # # new release: update package build with integrity hash
 # makepkg -g
-# # test:
+# # test: (-c: clean, -r: rmdeps, -s: sync)
 # makepkg -crs --needed
 
