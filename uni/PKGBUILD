@@ -1,6 +1,6 @@
 pkgname=uni
-pkgver=1.0.0
-pkgrel=3
+pkgver=1.1.0
+pkgrel=1
 pkgdesc='Query the Unicode database from the commandline, with good support for emojis'
 arch=('x86_64')
 repo="github.com/arp242/$pkgname"
@@ -8,14 +8,13 @@ url="https://$repo"
 license=('MIT')
 makedepends=('go')
 source=("$url/archive/v$pkgver.tar.gz")
-sha256sums=('04edf69aca7b086328fa1a7bd8e06617ba074eaec041eda6bdad7a1ba0a00dee')
+sha256sums=('938712d1e750b8dcea9f42d4691b66e15dbc7c7ce0200400f20f79702dc97bac')
 
 build() {
+  export CGO_LDFLAGS="$LDFLAGS"
+  export GOFLAGS="-buildmode=pie -trimpath -modcacherw"
   cd "$pkgname-$pkgver"
-  go build \
-    -trimpath \
-    -ldflags "-extldflags $LDFLAGS" \
-    -o "$pkgname" .
+  go build -o "$pkgname" .
 }
 
 check() {
