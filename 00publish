@@ -11,11 +11,16 @@ case $mode in
     ;;
   'v'|'version' )
     # list current published versions
-    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "$i" -- "PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
+    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "${i}:PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
     ;;
-  'd'|'diff' )
+  'vd'|'version-diff' )
+    # list current published versions and the diff with the previous
+    # release
+    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "${i}" -- "PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
+    ;;
+  'd'|'di'|'diff' )
     # list current published versions
-    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "$i" -- "PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
+    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; gitdiff =(git show "${i}:PKGBUILD") "${pkg}/PKGBUILD"  | egrep "pkg(ver|rel)="; echo; done;
     ;;
   'pub'|'publish')
     # checkout to public, and add master's current tree
