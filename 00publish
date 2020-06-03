@@ -4,14 +4,18 @@ mode=
 [[ -n $@ ]] && { mode=$1; shift }
 case $mode in
   'h'|'help')
-    echo '![i]nfos / [v]ersion / [pub]lish *pkgs / clean' ;;
+    echo '![i]nfos / [v]ersion / [d]iff / [pub]lish *pkgs / clean' ;;
   ''|'i'|'infos' )
     # see currently released pkgbuilds:
     git my topic infos -r
     ;;
   'v'|'version' )
     # list current published versions
-    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show $i | egrep "pkg(ver|rel)="; done
+    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "$i" -- "PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
+    ;;
+  'd'|'diff' )
+    # list current published versions
+    for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "$i" -- "PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
     ;;
   'pub'|'publish')
     # checkout to public, and add master's current tree
