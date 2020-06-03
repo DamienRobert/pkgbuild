@@ -29,7 +29,7 @@ case $mode in
     for pkg in $@; do
       aurpublish $pkg
       # If this is a new package, add the remote:
-      git remote add aur/pkg aur:pkg.git
+      git remote add aur/$pkg aur:$pkg.git
     done
     git checkout master
     git fetch --all
