@@ -4,7 +4,7 @@ mode=
 [[ -n $@ ]] && { mode=$1; shift }
 case $mode in
   'h'|'help')
-    echo '![i]nfos / [v]ersion / [d]iff / [pub]lish *pkgs / clean' ;;
+    echo '![i]nfos / [v]ersion / [d]iff / [vd]/version-diff / [pub]lish *pkgs / clean' ;;
   ''|'i'|'infos' )
     # see currently released pkgbuilds:
     git my topic infos -r
