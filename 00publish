@@ -14,12 +14,11 @@ case $mode in
     for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "${i}:PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
     ;;
   'vd'|'version-diff' )
-    # list current published versions and the diff with the previous
-    # release
+    # list current published versions and the diff with the previous release
     for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; git show "${i}" -- "PKGBUILD" | egrep "pkg(ver|rel)="; echo; done;
     ;;
   'd'|'di'|'diff' )
-    # list current published versions
+    # list current published versions and the diff with the current local pkg
     for i in $(git branch --list --remote "aur/*"); do pkg=${i:h:t}; echo "* $pkg *"; gitdiff =(git show "${i}:PKGBUILD") "${pkg}/PKGBUILD"  | egrep "pkg(ver|rel)="; echo; done;
     ;;
   'pub'|'publish')
