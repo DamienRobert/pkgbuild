@@ -40,8 +40,9 @@ case $mode in
     ;;
 esac
 
-# # new release: update package build with integrity hash
-# makepkg -g
-# # test: (-c: clean, -r: rmdeps, -s: sync)
-# makepkg -crs --needed
-
+# new release: update package build with integrity hash
+# $ makepkg -g
+# test: (-c: clean, -r: rmdeps, -s: sync)
+# $ makepkg -crs --needed
+# publish
+# $ ./00publish pub $pkg
