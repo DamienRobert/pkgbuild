@@ -44,5 +44,6 @@ esac
 # $ makepkg -g
 # test: (-c: clean, -r: rmdeps, -s: sync)
 # $ makepkg -crs --needed
-# publish
+# commit and publish
+# $ git commit -a
 # $ ./00publish pub $pkg
