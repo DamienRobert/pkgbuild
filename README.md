@@ -1,4 +1,4 @@
 My PKGBUILDs.
 
-Most are available in aur, but some would not make sens to publish, like
+Most are available in aur, but some would not make sense to publish, like
 `rust_utils`.
